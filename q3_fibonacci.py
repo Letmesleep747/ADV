@@ -79,11 +79,10 @@ def useMultiThread():
 
     print("\n===== Final Results =====")
     print(f"Total rounds: {len(total_times)}")
-    print(f"Average elapsed time (WITH MULTITHREADING): {average_time:,.2f} ns [{elapsed_time / 1_000_000_000:.6f} s]")
+    print(f"Average elapsed time (WITH MULTITHREADING): {average_time:,.2f} ns [{average_time / 1_000_000_000:.6f} s]")
 
 
 # WITHOUT MULTITHREADING -------------
-
 def without_multiThread():
     numbers = [35, 38, 40]
     results = {}
@@ -121,7 +120,7 @@ def withoutMultiThreading():
 
     print("\n===== Final Results =====")
     print(f"Total rounds: {len(total_times)}")
-    print(f"Average elapsed time: {average_time:,.2f} ns [{elapsed_time / 1_000_000_000:.6f} s]")
+    print(f"Average elapsed time: {average_time:,.2f} ns [{average_time / 1_000_000_000:.6f} s]")
 
 
 # Repeat the experiment for 10 rounds
@@ -131,15 +130,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-    
