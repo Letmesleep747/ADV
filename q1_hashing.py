@@ -13,7 +13,7 @@ class Medicine:
 
 class HashTable:
     # Hash table with linear probing.
-    # Idea: turn a key into an index, then walk forward if that slot is taken.
+    # Idea: turn a key into an index, then walk forward if that slot is taken
 
     def __init__(self, size=11):
         self.size = size
@@ -89,11 +89,18 @@ def show_medicine(med):
         print(f"Quantity: {med.quantity}")
 
 
+def linear_search(medicines_arr, code):
+    for medicine in medicines_arr:
+        if medicine.code == code:
+            return medicine
+
+    return None
+
 def main():
     ht = HashTable(11)
     arr = []  # plain list, used only to compare search speed
 
-    # Same sample data goes into BOTH the hash table and the array
+    # Same sample data that goes into BOTH the hash table and the array
     sample = [
         Medicine("M001", "Paracetamol", 5.50, 100),
         Medicine("M002", "Ibuprofen", 8.00, 50),
@@ -125,7 +132,13 @@ def main():
                 qty = int(input("Quantity: "))
                 med = Medicine(code, name, price, qty)
                 ht.insert(med)
-                arr.append(med)
+
+                for i, existing in enumerate(arr):
+                    if existing.code == med.code:
+                        arr[i] = med
+                        break
+                else:
+                    arr.append(med)
                 print("Inserted.\n")
 
             except ValueError:
@@ -139,29 +152,44 @@ def main():
         elif choice == "3":
             code = input("Enter code to search for timing: ")
 
-            # --- Hash table search time ---
+            # Hash table search time
             t1 = time.perf_counter_ns()
             result_ht = ht.search(code)
             t2 = time.perf_counter_ns()
             hash_time = t2 - t1
 
-            # --- Array linear search time (check one by one) ---
+            # Array linear search time (check one by one)
             t3 = time.perf_counter_ns()
-            result_arr = None
-            for m in arr:
-                if m.code == code:
-                    result_arr = m
-                    break
+            result_ls = linear_search(arr, code)
             t4 = time.perf_counter_ns()
             array_time = t4 - t3
 
-            print("\n--- Search Result ---")
-            show_medicine(result_ht)
+            if (result_ls is not None and result_ht is not None):
+                print("\n--- Search Result (Hash Table)---")
+                print(f"Medicine Code: {result_ht.code}")
+                print(f"Medicine Name: {result_ht.name}")
+                print(f"Medicine Price: {result_ht.price}")
+                print(f"Medicine Quantity: {result_ht.quantity}\n")
+
+                print("\n--- Search Result (Linear Search)---")
+                print(f"Medicine Code: {result_ls.code}")
+                print(f"Medicine Name: {result_ls.name}")
+                print(f"Medicine Price: {result_ls.price}")
+                print(f"Medicine Quantity: {result_ls.quantity}\n")
+
+            elif result_ht is None and result_ls is None:
+                print("Medicine not found in either data structure.")
+
+            elif result_ht is None:
+                print("No existing medicine found in the hash table.")
+
+            else:
+                print("No existing medicine found in the array.")
+           
             print("\n--- Timing (nanoseconds) ---")
             print(f"Hash table: {hash_time} ns")
             print(f"Array     : {array_time} ns")
-            print()
-
+         
         elif choice == "4":
             ht.display()
             print()

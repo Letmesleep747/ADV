@@ -1,4 +1,3 @@
-from operator import indexOf
 import os
 
 # Simple function to clear the previous history in terminal after a function
@@ -8,7 +7,7 @@ def pause():
 
 class Graph:
     def __init__(self):
-        self.adjacency_list = {}
+        self.adjacency_list = {}  # Data Structure: Dictionary (Data Type: Key-Value Pair) / Adjacency List
 
     def addVertex(self, vertex):
         # Add a new vertex function
@@ -67,7 +66,6 @@ class Course:
         print(f"Course Name: {self.courseName}")
         print(f"Credit Hours: {self.creditHours}")
         print(f"Level: {self.level}")
-
 
 def main():
     # Create five Course objects
